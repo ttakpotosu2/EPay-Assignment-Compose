@@ -1,5 +1,8 @@
 package com.example.epayasscompose
 
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+
 val services = listOf(
 	Services(
 		title = "MTN",
@@ -130,3 +133,12 @@ data class Services (
 	val icon: Int,
 	val title: String
 )
+
+object Dimensions {
+	val small: Dp = 6.dp
+	val medium: Dp = 12.dp
+	val semiMedium: Dp = 16.dp
+	val large: Dp = 20.dp
+	val extraLarge: Dp = 50.dp
+}
+

@@ -44,13 +44,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.epayasscompose.ui.theme.BlueFive
+import com.example.epayasscompose.ui.theme.BlueFour
+import com.example.epayasscompose.ui.theme.BlueSix
+import com.example.epayasscompose.ui.theme.BlueThree
+import com.example.epayasscompose.ui.theme.BlueTwo
 
 @Composable
 fun FindServiceScreen(modifier: Modifier = Modifier) {
 	
 	Column(
 		modifier = modifier
-			.background(Color(0xff13263D))
+			.background(BlueSix)
 			.fillMaxSize()
 			.systemBarsPadding()
 		
@@ -61,7 +66,7 @@ fun FindServiceScreen(modifier: Modifier = Modifier) {
 		SearchBar()
 		//Categories row
 		Categories()
-		HorizontalDivider(color = Color(0xff1D334E))
+		HorizontalDivider(color = BlueTwo)
 		//Services Grid
 		Services()
 	}
@@ -72,7 +77,7 @@ fun AppBar(modifier: Modifier = Modifier) {
 	Row(
 		modifier = modifier
 			.fillMaxWidth()
-			.padding(16.dp),
+			.padding(Dimensions.semiMedium),
 		verticalAlignment = Alignment.CenterVertically
 	) {
 		Icon(
@@ -87,7 +92,7 @@ fun AppBar(modifier: Modifier = Modifier) {
 			painter = painterResource(id = R.drawable.gh_flag),
 			contentDescription = null,
 			modifier = modifier
-				.size(20.dp)
+				.size(Dimensions.large)
 				.clip(CircleShape),
 			contentScale = ContentScale.Crop
 		)
@@ -105,7 +110,7 @@ fun SearchBar(modifier: Modifier = Modifier) {
 	TextField(
 		modifier = modifier
 			.fillMaxWidth()
-			.padding(horizontal = 16.dp),
+			.padding(horizontal = Dimensions.semiMedium),
 		value = "",
 		onValueChange = { },
 		leadingIcon = {
@@ -116,9 +121,9 @@ fun SearchBar(modifier: Modifier = Modifier) {
 			)
 		},
 		label = { Text(text = "Search Accounts", color = Color.White.copy(0.5f)) },
-		shape = RoundedCornerShape(6.dp),
+		shape = RoundedCornerShape(Dimensions.small),
 		colors = TextFieldDefaults.colors(
-			unfocusedContainerColor = Color(0xff213754),
+			unfocusedContainerColor = BlueThree,
 			unfocusedPlaceholderColor = Color.White,
 			unfocusedIndicatorColor = Color.Transparent
 		)
@@ -128,11 +133,11 @@ fun SearchBar(modifier: Modifier = Modifier) {
 @Composable
 fun Categories(modifier: Modifier = Modifier) {
 	LazyRow(
-		horizontalArrangement = Arrangement.spacedBy(16.dp),
-		contentPadding = PaddingValues(16.dp)
+		horizontalArrangement = Arrangement.spacedBy(Dimensions.semiMedium),
+		contentPadding = PaddingValues(Dimensions.semiMedium)
 	) {
 		items(categories) {
-			CategoryItem(categories = it)
+			CategoryItem(categories = it, modifier = modifier)
 		}
 	}
 }
@@ -146,13 +151,13 @@ fun CategoryItem(
 		modifier = modifier
 			.fillMaxWidth()
 			.clip(RoundedCornerShape(50.dp))
-			.background(Color(0xff213754))
-			.padding(12.dp)
-			.padding(horizontal = 6.dp)
+			.background(BlueThree)
+			.padding(Dimensions.medium)
+			.padding(horizontal = Dimensions.small)
 	) {
 		if (categories.icon != null) {
 			Image(painter = painterResource(id = categories.icon), contentDescription = null)
-			Spacer(modifier = Modifier.width(6.dp))
+			Spacer(modifier = Modifier.width(Dimensions.small))
 		}
 		Text(text = categories.title.uppercase(), color = Color.White, fontSize = 16.sp)
 	}
@@ -164,10 +169,10 @@ fun Services(
 ) {
 	LazyVerticalGrid(
 		columns = GridCells.Fixed(3),
-		contentPadding = PaddingValues(16.dp),
-		horizontalArrangement = Arrangement.spacedBy(16.dp),
-		verticalArrangement = Arrangement.spacedBy(16.dp),
-		modifier = modifier.background(Color(0xff0D1D2F))
+		contentPadding = PaddingValues(Dimensions.semiMedium),
+		horizontalArrangement = Arrangement.spacedBy(Dimensions.semiMedium),
+		verticalArrangement = Arrangement.spacedBy(Dimensions.semiMedium),
+		modifier = modifier.background(BlueFour)
 	) {
 		items(services){
 			GridItems(services = it, modifier = modifier)
@@ -183,9 +188,9 @@ fun GridItems(
 	Column(
 		modifier = modifier
 			.fillMaxWidth()
-			.clip(RoundedCornerShape(6.dp))
-			.background(Color(0xff162A44))
-			.padding(12.dp),
+			.clip(RoundedCornerShape(Dimensions.small))
+			.background(BlueFive)
+			.padding(Dimensions.medium),
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
 		Image(
@@ -193,7 +198,7 @@ fun GridItems(
 			contentDescription = null,
 			modifier = modifier
 				.clip(CircleShape)
-				.size(50.dp)
+				.size(Dimensions.extraLarge)
 		)
 		Spacer(modifier = Modifier.height(12.dp))
 		Text(text = services.title, color = Color.White)
