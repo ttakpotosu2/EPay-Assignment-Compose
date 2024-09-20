@@ -2,6 +2,7 @@ package com.example.epayasscompose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,21 +25,22 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.twotone.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,22 +55,26 @@ import com.example.epayasscompose.ui.theme.BlueTwo
 @Composable
 fun FindServiceScreen(modifier: Modifier = Modifier) {
 	
+	var selectedCategory by rememberSaveable { mutableStateOf("All") }
+	
 	Column(
 		modifier = modifier
 			.background(BlueSix)
 			.fillMaxSize()
 			.systemBarsPadding()
-		
 	) {
 		//App bar
 		AppBar()
 		//Search bar
 		SearchBar()
 		//Categories row
-		Categories()
+		Categories(
+			selectedCategory = selectedCategory,
+			onSelectedCategoryChange = {selectedCategory = it}
+		)
 		HorizontalDivider(color = BlueTwo)
 		//Services Grid
-		Services()
+		ServicesGrid(category = selectedCategory)
 	}
 }
 
@@ -131,13 +137,23 @@ fun SearchBar(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Categories(modifier: Modifier = Modifier) {
+fun Categories(
+	selectedCategory: String,
+	onSelectedCategoryChange: (String) -> Unit,
+	modifier: Modifier = Modifier
+) {
 	LazyRow(
 		horizontalArrangement = Arrangement.spacedBy(Dimensions.semiMedium),
 		contentPadding = PaddingValues(Dimensions.semiMedium)
 	) {
-		items(categories) {
-			CategoryItem(categories = it, modifier = modifier)
+		items(categories) { category ->
+			CategoryItem(
+				category = category,
+				modifier = modifier,
+				onclick = { onSelectedCategoryChange(category.title) },
+				backgroundColor = if (selectedCategory == category.title) Color.White else BlueThree,
+				foregroundColor = if (selectedCategory == category.title) BlueThree else Color.White
+			)
 		}
 	}
 }
@@ -145,27 +161,41 @@ fun Categories(modifier: Modifier = Modifier) {
 @Composable
 fun CategoryItem(
 	modifier: Modifier = Modifier,
-	categories: Categories
+	category: Categories,
+	backgroundColor: Color,
+	foregroundColor: Color,
+	onclick: () -> Unit
 ) {
 	Row(
 		modifier = modifier
 			.fillMaxWidth()
+			.clickable { onclick() }
 			.clip(RoundedCornerShape(50.dp))
-			.background(BlueThree)
+			.background(backgroundColor)
 			.padding(Dimensions.medium)
 			.padding(horizontal = Dimensions.small)
+	
 	) {
-		if (categories.icon != null) {
-			Image(painter = painterResource(id = categories.icon), contentDescription = null)
+		if (category.icon != null) {
+			Image(
+				painter = painterResource(id = category.icon),
+				contentDescription = null,
+				colorFilter = ColorFilter.tint(foregroundColor)
+			)
 			Spacer(modifier = Modifier.width(Dimensions.small))
 		}
-		Text(text = categories.title.uppercase(), color = Color.White, fontSize = 16.sp)
+		Text(
+			text = category.title.uppercase(),
+			color = foregroundColor,
+			fontSize = 16.sp
+		)
 	}
 }
 
 @Composable
-fun Services(
-	modifier: Modifier = Modifier
+fun ServicesGrid(
+	modifier: Modifier = Modifier,
+	category: String
 ) {
 	LazyVerticalGrid(
 		columns = GridCells.Fixed(3),
@@ -174,14 +204,20 @@ fun Services(
 		verticalArrangement = Arrangement.spacedBy(Dimensions.semiMedium),
 		modifier = modifier.background(BlueFour)
 	) {
-		items(services){
-			GridItems(services = it, modifier = modifier)
+		if (category == "All") {
+			items(services) { services ->
+				GridItem(services = services, modifier = modifier)
+			}
+		} else {
+			items(filteredList(category)) { services ->
+				GridItem(services = services, modifier = modifier)
+			}
 		}
 	}
 }
 
 @Composable
-fun GridItems(
+fun GridItem(
 	modifier: Modifier = Modifier,
 	services: Services
 ) {
@@ -203,6 +239,10 @@ fun GridItems(
 		Spacer(modifier = Modifier.height(12.dp))
 		Text(text = services.title, color = Color.White)
 	}
+}
+
+fun filteredList(category: String): List<Services> {
+	 return services.filter { it.category == category }
 }
 
 @Preview(showBackground = true, showSystemUi = true)

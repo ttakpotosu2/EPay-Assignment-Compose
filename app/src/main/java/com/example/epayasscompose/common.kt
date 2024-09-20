@@ -7,99 +7,93 @@ val services = listOf(
 	Services(
 		title = "MTN",
 		icon = R.drawable.mtn,
+		category = "Airtime-Top"
 	),
 	Services(
 		icon = R.drawable.ecg,
-		title = "Electricity"
+		title = "Electricity",
+		category = "Utilities"
 	),
 	Services(
 		icon = R.drawable.dstv,
-		title = "DStv"
+		title = "DStv",
+		category = "Streaming"
 	),
 	Services(
 		title = "GOtv",
 		icon = R.drawable.gotv,
+		category = "Streaming"
 	),
 	Services(
 		icon = R.drawable.at_logo,
-		title = "Airtel Tigo"
+		title = "Airtel Tigo",
+		category = "Airtime-Top"
 	),
 	Services(
 		icon = R.drawable.voda,
-		title = "Vodafone"
+		title = "Vodafone",
+		category = "Airtime-Top"
 	),
 	Services(
 		title = "MTN",
 		icon = R.drawable.mtn,
+		category = "Airtime-Top"
 	),
 	Services(
 		icon = R.drawable.ecg,
-		title = "Electricity"
+		title = "Electricity",
+		category = "Utilities"
 	),
 	Services(
 		icon = R.drawable.dstv,
-		title = "DStv"
+		title = "DStv",
+		category = "Streaming"
 	),
 	Services(
 		title = "GOtv",
 		icon = R.drawable.gotv,
+		category = "Streaming"
 	),
 	Services(
 		icon = R.drawable.at_logo,
-		title = "Airtel Tigo"
+		title = "Airtel Tigo",
+		category = "Airtime-Top"
 	),
 	Services(
 		icon = R.drawable.voda,
-		title = "Vodafone"
+		title = "Vodafone",
+		category = "Airtime-Top"
 	),
 	Services(
 		title = "MTN",
 		icon = R.drawable.mtn,
+		category = "Airtime-Top"
 	),
 	Services(
 		icon = R.drawable.ecg,
-		title = "Electricity"
+		title = "Electricity",
+		category = "Utilities"
 	),
 	Services(
 		icon = R.drawable.dstv,
-		title = "DStv"
+		title = "DStv",
+		category = "Streaming"
 	),
 	Services(
 		title = "GOtv",
 		icon = R.drawable.gotv,
+		category = "Streaming"
 	),
 	Services(
 		icon = R.drawable.at_logo,
-		title = "Airtel Tigo"
+		title = "Airtel Tigo",
+		category = "Airtime-Top"
 	),
 	Services(
 		icon = R.drawable.voda,
-		title = "Vodafone"
-	),
-	Services(
-		title = "MTN",
-		icon = R.drawable.mtn,
-	),
-	Services(
-		icon = R.drawable.ecg,
-		title = "Electricity"
-	),
-	Services(
-		icon = R.drawable.dstv,
-		title = "DStv"
-	),
-	Services(
-		title = "GOtv",
-		icon = R.drawable.gotv,
-	),
-	Services(
-		icon = R.drawable.at_logo,
-		title = "Airtel Tigo"
-	),
-	Services(
-		icon = R.drawable.voda,
-		title = "Vodafone"
-	),
+		title = "Vodafone",
+		category = "Airtime-Top"
+	)
 )
 
 val categories = listOf(
@@ -108,11 +102,11 @@ val categories = listOf(
 	),
 	Categories(
 		icon = R.drawable.group_2928,
-		title = "Airtime Top"
+		title = "Airtime-Top"
 	),
 	Categories(
 		icon = R.drawable.internet,
-		title = "Internet"
+		title = "Streaming"
 	),
 	Categories(
 		icon = R.drawable.sent_money,
@@ -131,7 +125,8 @@ data class Categories (
 
 data class Services (
 	val icon: Int,
-	val title: String
+	val title: String,
+	val category: String
 )
 
 object Dimensions {
@@ -141,4 +136,5 @@ object Dimensions {
 	val large: Dp = 20.dp
 	val extraLarge: Dp = 50.dp
 }
+
 
